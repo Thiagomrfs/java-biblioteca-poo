@@ -55,4 +55,8 @@ public class Library implements Serializable {
 	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
+	
+	public void saveState() {
+		LibraryManager.updateLibrary(this);
+	}
 }

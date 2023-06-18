@@ -6,7 +6,13 @@ public class PhysicalBook
 extends Book
 implements Loanable 
 {
+	private static final long serialVersionUID = 1L;
 	private BookStates conservationState;
+	
+	public PhysicalBook(String title, String author, String isbn, int pageCount) {
+		super(title, author, isbn, pageCount);
+		this.conservationState = BookStates.EXCELLENT;
+	}
 
 	public PhysicalBook(String title, String author, String isbn, int pageCount, BookStates conservationState) {
 		super(title, author, isbn, pageCount);

@@ -9,11 +9,17 @@ import user.User;
 import user.Employee;
 import user.UserManager;
 import library.Category;
+import book.Book;
+import book.BookManager;
+import book.PhysicalBook;
+import book.Ebook;
+import book.BookStates;
 
 public final class Init {
 	public static void generalInit() {
 		initUsers();
 		initLibraries();
+		initBooks();
 		System.out.println("Sistema populado com sucesso!!!");
 	}
 	
@@ -40,7 +46,7 @@ public final class Init {
 	
 	private static void initLibraries() {
 		Library central = new Library("Central");
-		Library ventos = new Library("Ventos fortes");
+		Library ventos = new Library("Ventos");
 		
 		Category centralTerror = new Category("Central assustada");
 		Category centralAmor = new Category("Central amada");
@@ -52,6 +58,11 @@ public final class Init {
 		ventos.addCategory(ventosComedia);
 		ventos.addCategory(ventosSuspeitos);
 		
+		HashMap<String, User> users = UserManager.getUsers();
+		ventos.addEmployee((Employee) users.get("Nickolas"));
+		ventos.addEmployee((Employee) users.get("Julio"));
+		central.addEmployee((Employee) users.get("Julio"));
+		
 		
 		HashMap<String, Library> map = new HashMap<String, Library>() {
 			private static final long serialVersionUID = 1L;
@@ -61,5 +72,29 @@ public final class Init {
 	    }};
 	    
 	    LibraryManager.saveLibraries(map);
+	}
+	
+	private static void initBooks() {
+		Book b1 = new PhysicalBook("Viagem ao centro da terra", "Jorje", "isbn1", 10, BookStates.EXCELLENT);
+		Book b2 = new PhysicalBook("A bela e a fera", "Jorjin", "isbn2", 10, BookStates.FAIR);
+		Book b3 = new PhysicalBook("Eu", "Marcos", "isbn3", 10, BookStates.EXCELLENT);
+		
+		Book eb1 = new Ebook("Viagem ao centro da terra", "Jorje", "isbn4", 10, "http://baixarlivros.com");
+		Book eb2 = new Ebook("A bela e a fera", "Jorjin", "isbn5", 10, "http://baixarlivros.com");
+		Book eb3 = new Ebook("Eu", "Marcos", "isbn6", 10, "http://baixarlivros.com");
+		
+		
+		HashMap<String, Book> map = new HashMap<String, Book>() {
+			private static final long serialVersionUID = 1L;
+		{
+	        put(b1.getTitle(), b1);
+	        put(b2.getTitle(), b2);
+	        put(b3.getTitle(), b3);
+	        put(eb1.getTitle(), eb1);
+	        put(eb2.getTitle(), eb2);
+	        put(eb3.getTitle(), eb3);
+	    }};
+	    
+	    BookManager.saveBooks(map);
 	}
 }

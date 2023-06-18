@@ -3,32 +3,58 @@ package dist;
 import java.util.HashMap;
 import java.util.Map;
 
+import library.Category;
+import library.Library;
+import library.LibraryManager;
+import user.Employee;
 import user.User;
 import user.UserManager;
 
 public class Main {
+	private static Map<String, String> arguments;
+	private static User currentUser;
+	private static Library currentLib;
+	private static Category currentCategory;
 
 	public static void main(String[] args) {
-		Map<String, String> arguments = parseArguments(args);
+		arguments = parseArguments(args);
 		
 		if (arguments.get("init") != null) {
 			Init.generalInit();
             return;
 		}
 		
-		Map<String, User> users = UserManager.getUsers();
-		
-		String username = arguments.get("uid");
-		User currentUser = users.get(username);
-		
-		if (currentUser == null) {			
-			System.out.println("Unable to get the current user!");
+		try {
+			currentUser = getCurrentUser();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return;
 		}
 		
 		if (arguments.get("loans") != null) {
 			currentUser.printLoans();
             return;
+		}
+		
+		try {
+			currentLib = getCurrentLibrary();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		try {
+			currentCategory = getCurrentCategory();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		try {
+			checkMethod();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
 		}
 	}
 	
@@ -60,4 +86,48 @@ public class Main {
         return arguments;
     }
 
+	private static User getCurrentUser() throws Exception {
+		Map<String, User> users = UserManager.getUsers();
+		String username = arguments.get("uid");
+		User currentUser = users.get(username);
+		
+		if (currentUser == null) {			
+			throw new Exception("Unable to get the current user!"); 
+		}
+		
+		return currentUser;
+	}
+	
+	private static Library getCurrentLibrary() throws Exception {
+		Map<String, Library> libs = LibraryManager.getLibraries();
+		String lib = arguments.get("lib");
+		Library currentLib = libs.get(lib);
+		
+		if (currentLib == null) {			
+			throw new Exception("Unable to get the current library!"); 
+		}
+		
+		return currentLib;
+	}
+	
+	private static Category getCurrentCategory() throws Exception {
+		for (Category category : currentLib.getCategories()) {
+            if (category.getName().equals(arguments.get("cat"))) {
+                return category;
+            }
+        }
+		
+		throw new Exception("Unable to get the current category!"); 
+	}
+	
+	private static void checkMethod() throws Exception {
+		if (arguments.get("add") != null) {
+			if (!(currentUser instanceof Employee)) throw new Exception("You need to be an Employee to add a new book!"); 
+			if (!currentLib.getEmployees().contains(currentUser)) throw new Exception("You does not have access to this library!"); 
+			
+			currentCategory.addBook();
+			currentLib.saveState();
+            return;
+		}
+	}
 }

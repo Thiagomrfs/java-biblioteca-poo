@@ -7,8 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-import user.User;
-
 public final class LibraryManager {
 	private static String filename = System.getProperty("user.dir") + "/libraries.bin";
 	
@@ -24,12 +22,12 @@ public final class LibraryManager {
         }
 	}
 	
-	public static HashMap<String, User> getLibraries() {
+	public static HashMap<String, Library> getLibraries() {
 		try {
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             @SuppressWarnings("unchecked")
-			HashMap<String, User> hashMap = (HashMap<String, User>) objectIn.readObject();
+			HashMap<String, Library> hashMap = (HashMap<String, Library>) objectIn.readObject();
             objectIn.close();
             fileIn.close();
 
@@ -38,5 +36,11 @@ public final class LibraryManager {
             e.printStackTrace();
         }
 		return null;
+	}
+	
+	public static void updateLibrary(Library lib) {
+		HashMap<String, Library> libs = getLibraries();
+		libs.put(lib.getName(), lib);
+		saveLibraries(libs);
 	}
 }
