@@ -2,13 +2,18 @@ package dist;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import library.Library;
+import library.LibraryManager;
 import user.User;
 import user.Employee;
 import user.UserManager;
+import library.Category;
 
 public final class Init {
 	public static void generalInit() {
 		initUsers();
+		initLibraries();
 		System.out.println("Sistema populado com sucesso!!!");
 	}
 	
@@ -31,5 +36,30 @@ public final class Init {
 	    UserManager.saveUsers(map);
 	    
 	    return map;
+	}
+	
+	private static void initLibraries() {
+		Library central = new Library("Central");
+		Library ventos = new Library("Ventos fortes");
+		
+		Category centralTerror = new Category("Central assustada");
+		Category centralAmor = new Category("Central amada");
+		central.addCategory(centralTerror);
+		central.addCategory(centralAmor);
+		
+		Category ventosComedia = new Category("Ventos engraçados");
+		Category ventosSuspeitos = new Category("Ventos suspeitos");
+		ventos.addCategory(ventosComedia);
+		ventos.addCategory(ventosSuspeitos);
+		
+		
+		HashMap<String, Library> map = new HashMap<String, Library>() {
+			private static final long serialVersionUID = 1L;
+		{
+	        put(central.getName(), central);
+	        put(ventos.getName(), ventos);
+	    }};
+	    
+	    LibraryManager.saveLibraries(map);
 	}
 }

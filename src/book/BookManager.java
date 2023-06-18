@@ -1,20 +1,20 @@
-package user;
+package book;
 
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-public final class UserManager {
-	private static String filename = System.getProperty("user.dir") + "/users.bin";
+public final class BookManager {
+	private static String filename = System.getProperty("user.dir") + "/books.bin";
 	
-	public static void saveUsers(HashMap<String, User> users) {
+	public static void saveBooks(HashMap<String, Book> books) {
 		try {
             FileOutputStream fileOut = new FileOutputStream(filename);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(users);
+            objectOut.writeObject(books);
             objectOut.close();
             fileOut.close();
         } catch (IOException e) {
@@ -22,12 +22,12 @@ public final class UserManager {
         }
 	}
 	
-	public static HashMap<String, User> getUsers() {
+	public static HashMap<String, Book> getBooks() {
 		try {
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             @SuppressWarnings("unchecked")
-			HashMap<String, User> hashMap = (HashMap<String, User>) objectIn.readObject();
+			HashMap<String, Book> hashMap = (HashMap<String, Book>) objectIn.readObject();
             objectIn.close();
             fileIn.close();
 

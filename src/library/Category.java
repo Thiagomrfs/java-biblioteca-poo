@@ -1,11 +1,13 @@
 package library;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import book.Book;
 import book.Ebook;
 import book.PhysicalBook;
 
-public class Category {
+public class Category implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private ArrayList<Book> books = new ArrayList<Book>();
 

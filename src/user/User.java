@@ -46,4 +46,11 @@ public class User implements Serializable {
 		this.loans.add(loan);
 	}
 	
+	public void printLoans() {
+		System.out.println(name + "'s loans:");
+		for (Loan loan : loans) {
+            System.out.println(loan);
+        }
+	}
+	
 }

@@ -1,11 +1,13 @@
 package library;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import user.User;
 import java.util.ArrayList;
 import book.PhysicalBook;
 
-public class Loan {
+public class Loan implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Library library;
 	private User user;
 	private LocalDate loanDate;

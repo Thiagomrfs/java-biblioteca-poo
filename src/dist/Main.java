@@ -10,27 +10,26 @@ public class Main {
 
 	public static void main(String[] args) {
 		Map<String, String> arguments = parseArguments(args);
+		
+		if (arguments.get("init") != null) {
+			Init.generalInit();
+            return;
+		}
+		
 		Map<String, User> users = UserManager.getUsers();
 		
-		for (String arg : args) {
-            if (arg.equals("--init")) {
-                Init.generalInit();
-                return;
-            }
-        }
-		
 		String username = arguments.get("uid");
-		String library = arguments.get("lib");
-		String category = arguments.get("cat");
-		
 		User currentUser = users.get(username);
 		
 		if (currentUser == null) {			
-			System.out.println("Não foi possível encontrar um usuário com esse uid!");
+			System.out.println("Unable to get the current user!");
 			return;
 		}
 		
-		
+		if (arguments.get("loans") != null) {
+			currentUser.printLoans();
+            return;
+		}
 	}
 	
 	private static Map<String, String> parseArguments(String[] args) {
@@ -49,6 +48,12 @@ public class Main {
                 } else {
                 	arguments.put(key, null);
                 }
+            }
+            
+            if (arg.startsWith("-")) {
+                String key = arg.substring(1);
+                
+                arguments.put(key, "present");
             }
         }
 

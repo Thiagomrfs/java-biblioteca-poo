@@ -1,9 +1,11 @@
 package library;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import user.Employee;
 
-public class Library {
+public class Library implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private static int booksOnStock;
 	private ArrayList<Category> categories = new ArrayList<Category>();
@@ -42,12 +44,15 @@ public class Library {
 		return categories;
 	}
 	
-	public void addBook(Employee instance) {
+	public void addEmployee(Employee instance) {
 		this.employees.add(instance);
 	}
 	
-	public void removeBook(Employee instance) {
+	public void removeEmployee(Employee instance) {
 		this.employees.remove(instance);
 	}
 	
+	public ArrayList<Employee> getEmployees() {
+		return employees;
+	}
 }

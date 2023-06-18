@@ -1,20 +1,22 @@
-package user;
+package library;
 
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-public final class UserManager {
-	private static String filename = System.getProperty("user.dir") + "/users.bin";
+import user.User;
+
+public final class LibraryManager {
+	private static String filename = System.getProperty("user.dir") + "/libraries.bin";
 	
-	public static void saveUsers(HashMap<String, User> users) {
+	public static void saveLibraries(HashMap<String, Library> libraries) {
 		try {
             FileOutputStream fileOut = new FileOutputStream(filename);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(users);
+            objectOut.writeObject(libraries);
             objectOut.close();
             fileOut.close();
         } catch (IOException e) {
@@ -22,7 +24,7 @@ public final class UserManager {
         }
 	}
 	
-	public static HashMap<String, User> getUsers() {
+	public static HashMap<String, User> getLibraries() {
 		try {
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
