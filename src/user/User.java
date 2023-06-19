@@ -2,6 +2,7 @@ package user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import library.Loan;
 
 public class User implements Serializable {
@@ -49,8 +50,17 @@ public class User implements Serializable {
 	public void printLoans() {
 		System.out.println(name + "'s loans:");
 		for (Loan loan : loans) {
-            System.out.println(loan);
+			System.out.println("- Loan on " + loan.getLoanDate() + " to " + loan.getExpirationDate() + (loan.isExpired() ? "(Expired)" : ""));
+			loan.printLoanedBooks();
         }
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (o == null || getClass() != o.getClass()) return false;
+	    User user = (User) o;
+	    return cpf.equals(user.getCpf());
 	}
 	
 }

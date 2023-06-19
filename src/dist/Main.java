@@ -3,12 +3,19 @@ package dist;
 import java.util.HashMap;
 import java.util.Map;
 
+import book.Book;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import library.Category;
 import library.Library;
 import library.LibraryManager;
 import user.Employee;
 import user.User;
 import user.UserManager;
+import library.Loan;
 
 public class Main {
 	private static Map<String, String> arguments;
@@ -51,7 +58,7 @@ public class Main {
 		}
 		
 		try {
-			checkMethod();
+			checkMethod(args);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -120,14 +127,53 @@ public class Main {
 		throw new Exception("Unable to get the current category!"); 
 	}
 	
-	private static void checkMethod() throws Exception {
+	private static void checkMethod(String[] args) throws Exception {
 		if (arguments.get("add") != null) {
-			if (!(currentUser instanceof Employee)) throw new Exception("You need to be an Employee to add a new book!"); 
+			if (!(currentUser instanceof Employee)) throw new Exception("You need to be an Employee to add a new book!");
 			if (!currentLib.getEmployees().contains(currentUser)) throw new Exception("You does not have access to this library!"); 
 			
 			currentCategory.addBook();
 			currentLib.saveState();
             return;
 		}
+		
+		loanBooks(args);
+	}
+	
+	private static void loanBooks(String[] args) {
+		ArrayList<String> titles = getTitles(args);
+        ArrayList<Book> books = currentCategory.getBooksByTitles(titles);
+        System.out.println("This is your receipt: \n");
+        
+        if (!books.isEmpty()) {
+        	Loan loan = new Loan(currentLib, currentUser, LocalDate.now(), LocalDate.now().plusDays(7));
+            
+            for (Book book: books) {
+        		book.addToLoan(loan);
+            }
+        } else {
+        	System.out.println("This library doesn't have the specified books!");
+        }
+	}
+	
+	private static ArrayList<String> getTitles(String[] args) {
+		String query = "--loan";
+		ArrayList<String> titles = new ArrayList<String>();
+		boolean loaning = false;
+		
+		if (!Arrays.asList(args).contains(query)) return null;
+		
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals(query)) loaning = true;
+            
+            if(loaning) {
+            	if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
+                    titles.add(args[i + 1]);
+                } else loaning = false;
+            }
+        }
+        
+        return titles;
 	}
 }

@@ -2,7 +2,9 @@ package book;
 
 import java.io.Serializable;
 
-public abstract class Book implements Serializable {
+public abstract class Book 
+	implements Serializable, Loanable
+{
 	private static final long serialVersionUID = 1L;
 	private String title;
     private String author;

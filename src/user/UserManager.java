@@ -37,4 +37,10 @@ public final class UserManager {
         }
 		return null;
 	}
+	
+	public static void updateUser(User user) {
+		HashMap<String, User> users = getUsers();
+		users.put(user.getName(), user);
+		saveUsers(users);
+	}
 }

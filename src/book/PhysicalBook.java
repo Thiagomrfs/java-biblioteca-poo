@@ -4,7 +4,6 @@ import library.Loan;
 
 public class PhysicalBook 
 extends Book
-implements Loanable 
 {
 	private static final long serialVersionUID = 1L;
 	private BookStates conservationState;
@@ -28,12 +27,12 @@ implements Loanable
 	}
 	
 	public void addToLoan(Loan loan) {
-		// TODO add to loan
+		System.out.println("-> Loaning book: " + getTitle() + ".");
+		loan.addBook(this);
 	}
 	
 	public void removeFromLoan(Loan loan) {
-		// TODO remove from loan
+		loan.removeBook(this);
 	}
-	
 	
 }

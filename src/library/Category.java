@@ -26,6 +26,7 @@ public class Category implements Serializable {
 	}
 	
 	public void addBook() {
+		System.out.println("Adding book! \n");
 		Scanner scanner = new Scanner(System.in);
 		
 		String title = askUserInput(scanner, "Book's title");
@@ -44,6 +45,7 @@ public class Category implements Serializable {
 		}
 
         scanner.close();
+        System.out.println("Book added! \n");
 	}
 	
 	private String askUserInput(Scanner scanner, String msg) {
@@ -88,6 +90,21 @@ public class Category implements Serializable {
 
 	public ArrayList<Book> getBooks() {
 		return books;
+	}
+	
+	public ArrayList<Book> getBooksByTitles(ArrayList<String> titles) {
+		ArrayList<Book> response = new ArrayList<>();
+        
+        for (String title : titles) {
+            for (Book book : getBooks()) {
+                if (book.getTitle().equals(title)) {
+                    response.add(book);
+                    break;
+                }
+            }
+        }
+        
+        return response;
 	}
 	
 	

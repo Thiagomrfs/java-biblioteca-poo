@@ -7,7 +7,6 @@ import user.Employee;
 public class Library implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private static int booksOnStock;
 	private ArrayList<Category> categories = new ArrayList<Category>();
 	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	
@@ -22,14 +21,6 @@ public class Library implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public int getStock() {
-		return Library.booksOnStock;
-	}
-
-	public void increaseStock() {
-		Library.booksOnStock += 1;
 	}
 	
 	public void addCategory(Category category) {

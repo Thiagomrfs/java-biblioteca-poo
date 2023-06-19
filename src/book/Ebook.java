@@ -1,6 +1,9 @@
 package book;
 
-public class Ebook extends Book 
+import library.Loan;
+
+public class Ebook 
+extends Book
 {
 	private static final long serialVersionUID = 1L;
 	private String downloadUrl;
@@ -14,4 +17,12 @@ public class Ebook extends Book
 		return downloadUrl;
 	}
 
+	public void addToLoan(Loan loan) {
+		System.out.println("-> Loaning E-book: " + getTitle() + ".");
+		loan.addBook(this);
+	}
+	
+	public void removeFromLoan(Loan loan) {
+		loan.removeBook(this);
+	}
 }
