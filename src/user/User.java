@@ -50,7 +50,11 @@ public class User implements Serializable {
 	public void printLoans() {
 		System.out.println(name + "'s loans:");
 		for (Loan loan : loans) {
-			System.out.println("- Loan on " + loan.getLoanDate() + " to " + loan.getExpirationDate() + (loan.isExpired() ? "(Expired)" : ""));
+			System.out.println(
+				"- Loan on " + loan.getLoanDate()
+				+ " to " + loan.getExpirationDate()
+				+ (loan.isExpired() ? "(Expired)" : "")
+			);
 			loan.printLoanedBooks();
         }
 	}

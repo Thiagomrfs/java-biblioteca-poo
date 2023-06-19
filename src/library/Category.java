@@ -107,5 +107,10 @@ public class Category implements Serializable {
         return response;
 	}
 	
-	
+	public void listBooks() {
+		System.out.println("Books on " + name + ":");
+		for (Book book: books) {
+			System.out.println("  - " + book.getTitle());
+		}
+	}
 }

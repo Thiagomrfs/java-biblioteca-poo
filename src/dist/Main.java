@@ -57,6 +57,11 @@ public class Main {
 			return;
 		}
 		
+		if (arguments.get("books") != null) {
+			currentCategory.listBooks();
+            return;
+		}
+		
 		try {
 			checkMethod(args);
 		} catch (Exception e) {
