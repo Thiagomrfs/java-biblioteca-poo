@@ -25,6 +25,10 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 	
+	public void addBook(Book book) {
+		books.add(book);
+	}
+	
 	public void addBook() {
 		System.out.println("Adding book! \n");
 		Scanner scanner = new Scanner(System.in);

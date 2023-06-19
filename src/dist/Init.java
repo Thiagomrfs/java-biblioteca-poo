@@ -18,8 +18,8 @@ import book.BookStates;
 public final class Init {
 	public static void generalInit() {
 		initUsers();
-		initLibraries();
 		initBooks();
+		initLibraries();
 		System.out.println("Sistema populado com sucesso!!!");
 	}
 	
@@ -50,11 +50,15 @@ public final class Init {
 		
 		Category centralTerror = new Category("Central assustada");
 		Category centralAmor = new Category("Central amada");
+		populateCategory(centralTerror);
+		populateCategory(centralAmor);
 		central.addCategory(centralTerror);
 		central.addCategory(centralAmor);
 		
 		Category ventosComedia = new Category("Ventos engraçados");
 		Category ventosSuspeitos = new Category("Ventos suspeitos");
+		populateCategory(ventosComedia);
+		populateCategory(ventosSuspeitos);
 		ventos.addCategory(ventosComedia);
 		ventos.addCategory(ventosSuspeitos);
 		
@@ -74,14 +78,23 @@ public final class Init {
 	    LibraryManager.saveLibraries(map);
 	}
 	
+	private static void populateCategory(Category category) {
+		HashMap<String, Book> books = BookManager.getBooks();
+		
+		for (Map.Entry<String, Book> entry : books.entrySet()) {
+            Book value = entry.getValue();
+            category.addBook(value);
+        }
+	}
+	
 	private static void initBooks() {
 		Book b1 = new PhysicalBook("Viagem ao centro da terra", "Jorje", "isbn1", 10, BookStates.EXCELLENT);
 		Book b2 = new PhysicalBook("A bela e a fera", "Jorjin", "isbn2", 10, BookStates.FAIR);
 		Book b3 = new PhysicalBook("Eu", "Marcos", "isbn3", 10, BookStates.EXCELLENT);
 		
-		Book eb1 = new Ebook("Viagem ao centro da terra", "Jorje", "isbn4", 10, "http://baixarlivros.com");
-		Book eb2 = new Ebook("A bela e a fera", "Jorjin", "isbn5", 10, "http://baixarlivros.com");
-		Book eb3 = new Ebook("Eu", "Marcos", "isbn6", 10, "http://baixarlivros.com");
+		Book eb1 = new Ebook("Marley e eu", "Jorje", "isbn4", 10, "http://baixarlivros.com");
+		Book eb2 = new Ebook("Tristeza sem fim", "Jorjin", "isbn5", 10, "http://baixarlivros.com");
+		Book eb3 = new Ebook("Amongus", "Marcos", "isbn6", 10, "http://baixarlivros.com");
 		
 		
 		HashMap<String, Book> map = new HashMap<String, Book>() {
